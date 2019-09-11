@@ -1,0 +1,120 @@
+<html ng-app = "Web">
+<head>
+	<title>Web</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap.css">
+		<meta charset="UTF-8">
+        <style>
+            .jumbotron{
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                width: 700px;
+            }
+            .form-control{
+            	margin-bottom: 10px;
+            }
+            .btn{
+            }
+        </style>
+	<script src = "angular.js"></script>
+	<script>
+		angular.module("Web", []);
+		angular.module("Web").controller("WebCtrl", function($scope){
+                $scope.app = "Interface Web";
+                
+				$scope.pendentes = [];
+
+				fetch('http://localhost:8080/api/tasks/pendents')
+					.then(response => response.json())
+					.then(json => $scope.pendentes = json);
+
+				$scope.feitos    = [];
+				
+				fetch('http://localhost:8080/api/tasks/complete')
+					.then(response => response.json())
+					.then(json => $scope.feitos = json);
+
+				$scope.todos     = [];
+
+				$scope.botaoPendenteAtivo = true;
+
+                $scope.adicionaTarefa = function(tarefa){
+					let data = {"description": angular.copy(tarefa).nome}
+					$scope.pendentes.push(data);
+
+					fetch('http://localhost:8080/api/tasks',{
+						method: "POST",
+						credentials: "include", //Pega as informações em coock e coloca na requisição
+						body: JSON.stringify(data),
+						cache: "no-cache",
+						headers: new Headers({
+							"content-type": "application/json"
+						})
+					}).then(function (response){
+
+						if(response.status !== 201){
+							console.log("Response status foi boicotado: " + response.status);
+							return ;
+						}
+
+						response.json().then(function (data){
+							console.log(data)
+						})
+					})
+
+                	delete $scope.tarefa;
+                };
+                $scope.mostraPendentes = function(){
+					//console.log($scope.pendentes)
+                	$scope.botaoPendenteAtivo = true;
+                	$scope.botaoTodosAtivo = false;
+                	$scope.botaoFeitosAtivo = false;
+                };
+      	        $scope.mostraFeitos = function(){
+					//console.log($scope.feitos)
+               		$scope.botaoPendenteAtivo = false;
+               		$scope.botaoTodosAtivo = false;
+                	$scope.botaoFeitosAtivo = true;
+                };
+                $scope.mostraTodos = function(){
+					//console.log($scope.todos)
+                	$scope.todos = $scope.pendentes.concat($scope.feitos)
+               		$scope.botaoPendenteAtivo = false;
+               		$scope.botaoTodosAtivo = true;
+                	$scope.botaoFeitosAtivo = false;
+				};
+				$scope.uparPendentes = function(){
+					var objetoteste = angular.copy($scope.pendentes);
+					localStorage.setItem('ListaPendentes', JSON.stringify(objetoteste));
+					console.log(localStorage);
+				};
+            });
+	</script>
+</head>
+<body ng-controller = "WebCtrl">
+	<div class = "jumbotron">
+		<h4>{{app}}</h4>
+		<hr>
+		<input class ="form-control" type ="text" ng-model ="tarefa.nome" placeholder="O que precisa ser feito?"/>
+		<button type="button" class = "btn btn-primary btn-bloc" ng-disabled = "!tarefa.nome" ng-click="adicionaTarefa(tarefa)">Adicionar Tarefa</button>
+		<hr>
+		<div class="btn-group" role="group" aria-label="Exemplo básico">
+  			<button type="button" class="btn btn-secondary" ng-click="mostraTodos()">Todos</button>
+  			<button type="button" class="btn btn-secondary" ng-click="mostraPendentes()">Pendentes</button>
+  			<button type="button" class="btn btn-secondary" ng-click="mostraFeitos()">Feitos</button>
+		</div>
+		<hr>
+		<table class="table table-striped">
+            <tr ng-repeat="pendente in pendentes" ng-if="botaoPendenteAtivo">
+                <td>{{pendente.description}}</td>
+            </tr> 
+            <tr ng-repeat="todo in todos" ng-if="botaoTodosAtivo">
+            	<td>{{todo.description}}</td>
+			</tr>
+			<tr ng-repeat="feito in feitos" ng-if="botaoFeitosAtivo">
+            	<td>{{feito.description}}</td>
+            </tr>
+		</table>
+	</div>
+</body>
+</html>
