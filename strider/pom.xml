@@ -8,11 +8,11 @@
 		<version>2.1.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>mvc.springframework</groupId>
-	<artifactId>mvc-spring</artifactId>
+	<groupId>chalenger.striderREST</groupId>
+	<artifactId>strider</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mvc-spring</name>
-	<description>mvc-spring project for Spring Boot</description>
+	<name>StriderREST</name>
+	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
