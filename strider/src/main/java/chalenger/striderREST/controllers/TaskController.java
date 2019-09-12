@@ -41,9 +41,9 @@ public class TaskController {
         return taskService.saveTask(task);
     }
 
-    @GetMapping("/finish/{id}")
+    @PostMapping("/finish")
     @ResponseStatus(HttpStatus.CREATED)
-    public Task finishTask(@PathVariable Long id){
+    public Task finishTask(@RequestParam("id") Long id){
         Task tarefa = taskService.findOneById(id);
         tarefa.setStatus();
 

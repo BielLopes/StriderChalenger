@@ -34,6 +34,27 @@
 					.then(response => response.json())
 					.then(json => $scope.feitos = json);
 
+				function updateData(){
+					setTimeout(function(){ 
+					
+						console.log("Aloha?")
+						
+						fetch('http://localhost:8080/api/tasks/complete')
+							.then(response => response.json())
+							.then(json => $scope.feitos = json);
+
+						fetch('http://localhost:8080/api/tasks/pendents')
+							.then(response => response.json())
+							.then(json => $scope.pendentes = json);
+
+						
+						updateData();
+					}, 1000);
+				}
+
+				updateData();
+				
+
 				$scope.todos     = [];
 
 				$scope.botaoPendenteAtivo = true;
@@ -44,7 +65,7 @@
 
 					fetch('http://localhost:8080/api/tasks',{
 						method: "POST",
-						credentials: "include", //Pega as informações em coock e coloca na requisição
+						credentials: "omit", //Pega as informações em coock e coloca na requisição
 						body: JSON.stringify(data),
 						cache: "no-cache",
 						headers: new Headers({
