@@ -34,25 +34,25 @@
 					.then(response => response.json())
 					.then(json => $scope.feitos = json);
 
-				function updateData(){
-					setTimeout(function(){ 
+				
+				setInterval(function(){ 
+				
+					console.log("Aloha?")
 					
-						console.log("Aloha?")
-						
-						fetch('http://localhost:8080/api/tasks/complete')
-							.then(response => response.json())
-							.then(json => $scope.feitos = json);
+					fetch('http://localhost:8080/api/tasks/complete')
+						.then(response => response.json())
+						.then(json => $scope.feitos = json);
 
-						fetch('http://localhost:8080/api/tasks/pendents')
-							.then(response => response.json())
-							.then(json => $scope.pendentes = json);
+					fetch('http://localhost:8080/api/tasks/pendents')
+						.then(response => response.json())
+						.then(json => $scope.pendentes = json);
 
-						
-						updateData();
-					}, 1000);
-				}
+					
+					
+				}, 1000);
+				
 
-				updateData();
+				
 				
 
 				$scope.todos     = [];
