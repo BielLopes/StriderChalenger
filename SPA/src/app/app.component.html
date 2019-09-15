@@ -6,16 +6,30 @@
 
     <br/>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Descrição da tarefa" >
+          <input 
+          matInput 
+          placeholder="Descrição da tarefa" 
+          (input)="atualizaTask($event)"
+          [value]="task"
+          >
         </mat-form-field>
     <br/>
     <div class="text-center">
-      <button mat-button>Adicionar Tarefa</button>
+      <button 
+      mat-button
+      (click)="adcionaTarefa()"
+      >
+      Adicionar Tarefa
+    </button>
     </div>
     <br/>
     <br/>
     
-    <navigation-custom></navigation-custom>
+    <navigation-custom
+    [todas]="todas"
+    [pendentes]="pendentes"
+    [feitas]="feitas"
+    ></navigation-custom>
 
   </div>
   

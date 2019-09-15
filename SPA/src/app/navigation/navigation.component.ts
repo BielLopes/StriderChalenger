@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit, Input} from '@angular/core';
+import { Task } from '../shared/task.model';
 
 /**
  * @title Stepper overview
@@ -10,21 +10,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['navigation.component.css'],
 })
 export class NavigationComponent implements OnInit {
-  public firstFormGroup: FormGroup;
-  public secondFormGroup: FormGroup;
-  private _formBuilder: FormBuilder;
 
 
-  constructor() {
-    this._formBuilder = new FormBuilder()
+  @Input() public todas: Task[]
+  @Input() public feitas: Task[]
+  @Input() public pendentes: Task[]
+
+  constructor() { 
   }
 
-  ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+  ngOnInit() {    
+    console.log(this.feitas)
   }
 }

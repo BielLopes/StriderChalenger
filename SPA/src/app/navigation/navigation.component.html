@@ -1,16 +1,39 @@
   <mat-horizontal-stepper [linear]="false" #stepper>
     <mat-step >
         <ng-template matStepLabel>Todas</ng-template>
-        <p>all</p>
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let task of todas"> {{ task.description }} </mat-list-item>
+        </mat-list>
+        
         
     </mat-step>
     <mat-step >
         <ng-template matStepLabel>Pendentes</ng-template>
-        <p>Pend</p>
+        
+        <mat-list role="list">        
+            <mat-list-item role="listitem" *ngFor="let task of pendentes"> {{ task.description }} </mat-list-item>
+        </mat-list>
+
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Concluidas</ng-template>
-      <p>Conc</p>
+      
+      <mat-accordion>
+        <div *ngFor="let task of feitas">
+        
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{task.description}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+        
+            <p>Aloha</p>
+          </mat-expansion-panel>
+        </div>
+
+      </mat-accordion>
+
     </mat-step>
   </mat-horizontal-stepper>
   

@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component'; 
 
+import { TaskService } from './tasks.service';
+
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -12,6 +14,9 @@ import {MatGridListModule} from '@angular/material/grid-list'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper'
 import {MatInputModule} from '@angular/material/input'
+import {MatListModule} from '@angular/material/list'
+import {MatExpansionModule} from '@angular/material/expansion'
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
@@ -22,6 +27,7 @@ import {MatInputModule} from '@angular/material/input'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -29,8 +35,12 @@ import {MatInputModule} from '@angular/material/input'
     MatFormFieldModule,
     MatStepperModule,
     MatInputModule,
+    MatListModule,
+    MatExpansionModule,
   ],
-  providers: [],
+  providers: [
+    TaskService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
